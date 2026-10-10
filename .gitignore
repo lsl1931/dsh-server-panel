@@ -1,0 +1,7 @@
+# 忽略构建之外的杂项
+node_modules/
+*.log
+*.tmp
+.DS_Store
+.dsp-*
+*.bak-*

@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "title": "服务器面板",
+    "description": "在 DSH WebUI 里管理本机：CPU/内存/磁盘/网络概览、systemd 服务启停与 journalctl 日志、文件浏览与编辑。特权操作通过面板内临时输入的 sudo 密码完成，密码只留在内存。"
+  },
+  "panel": "服务器",
+  "tab.overview": "概览",
+  "tab.services": "服务",
+  "tab.files": "文件"
+}

@@ -1,0 +1,37 @@
+# dsh-server-panel bundle：挂载 Host 半（采样器 + /dsh-server-panel/* 路由 + sudo 通道）。
+# 客户端半由 package.json 的 dsh.client 段声明，加载器会读取 ./client 导出。
+#
+# 所有配置项都有内置默认值，删掉 config 整段也能正常工作：
+#   pollMs            后台采样间隔（ms），默认 2000
+#   overviewStaleMs   /overview 请求时若缓存超过该时长则先强制采样，默认 1000
+#   servicesCacheMs   服务列表缓存（ms），默认 2000
+#   sudoIdleMs        解锁后空闲多久自动清除内存中的密码（ms），0 = 每次操作后立即清除，默认 600000
+#   commandTimeoutMs  子进程超时（ms），默认 10000
+#   allowedReadRoots  文件读取白名单（绝对路径）
+#   allowedWriteRoots 文件写入白名单（绝对路径）
+#   dangerUnits       高危单元：客户端对这些单元的 stop/restart 做二次确认
+- insert:
+    - id: dsh-server-panel
+      name: 'dsh-server-panel'
+      config:
+        pollMs: 2000
+        overviewStaleMs: 1000
+        servicesCacheMs: 2000
+        sudoIdleMs: 600000
+        commandTimeoutMs: 10000
+        # 文件白名单：省略即用内置默认（运行 dsh 的用户家目录 + /etc /var/log /srv /opt 可读，
+        # 写入限家目录）。要改就取消下面两行注释：
+        # allowedReadRoots: [/etc, /var/log, /srv, /opt]
+        # allowedWriteRoots: [/home/<user>]
+        dangerUnits:
+          - ssh
+          - sshd
+          - systemd-logind
+          - networking
+          - systemd-networkd
+          - dsh
+        # 终端：WebSocket + 真 PTY。terminalShell 是普通会话的登录 shell；
+        # root 会话固定走 `sudo -i`（已解锁时自动免密）。terminalMaxSessions 限制并发会话数。
+        terminalEnabled: true
+        terminalMaxSessions: 4
+        terminalShell: /bin/bash

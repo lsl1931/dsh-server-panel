@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "title": "Server Panel",
+    "description": "Manage this machine from the DSH Web UI: CPU/memory/disk/network overview, systemd services with journalctl logs, and file browsing/editing. Privileged actions use a sudo password entered in the panel and kept in memory only."
+  },
+  "panel": "Server",
+  "tab.overview": "Overview",
+  "tab.services": "Services",
+  "tab.files": "Files"
+}
